@@ -12,7 +12,7 @@ The are two types of adapters: push and pull.
 A push adapter is an engine that listens for data from an external source and brings it into aiWare.  An example of this type of adapter is one that listens for a stream or RSS feed and sends the data to other engines in aiWare.
 
 #### Pull Adapter
-A pull adapter retrieves data from a source, typically a URI, and brings it into the Veritone platform.  Most adapters are pull adapters.
+A pull adapter retrieves data from a source, typically a URI, and brings it into aiWare.  Most adapters are pull adapters.
 
 Veritone provides several pull adapters that are available to all users, including some to pull content from Amazon S3, YouTube, Google Drive, Box, Dropbox, RSS and FTP.  There is also a File Upload adapter that allows you to select a file from your personal computer.  
 
