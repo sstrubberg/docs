@@ -1,20 +1,22 @@
-# Overview of Veritone Developer
+# Overview of Veritone Developer 
+Veritone is a provider of artificial intelligence (AI) technology and solutions to the media and entertainment, legal and compliance, government, and more industries. 
 
-**Veritone Developer** is an aiWARE application that allows developers to extend the capabilities of aiWARE with their own applications, engines, and other components, and monetize those extensions.
+Our proprietary aiWARE platform, much like a traditional operating system, provides a common, open software infrastructure that lets you build and use end-to-end, AI-powered solutions — from data ingestion to intelligent data analysis — accessible in the application of your choice. 
 
-## aiWARE is Built for Developers
+This approach combined with our proprietary orchestration technology, Conductor, makes it possible to quickly and accurately analyze massive amounts of diverse information — audio, video, image, text, and more — from multiple sources and formats to produce actionable intelligence in a faster, more scalable, and more cost-effective way than humans can.
 
-Veritone's aiWARE platform is purpose built for extensibility by developers on multiple levels.
-In many ways our developer community is the lifeblood of the entire aiWARE software platform, enabling the platform to expand organically through the addition of new capabilities and functionality.  
+We believe in the wisdom of the crowd. That’s why we built a machine learning ecosystem comprised of third-party cognitive engines and native, trainable machine learning models to achieve the breadth of capabilities and depth of specialization needed in AI applications to meet virtually any use case you might have. Today, our developer ecosystem supports over 30 different cognitive capabilities and counting within the speech, text, vision, biometrics, audio, data, and transformation cognitive classes.
 
-Our goal is to make it possible for developers all all shapes and sizes to interact with and customize the platform through Veritone Developer.
-aiWARE can be a very effective tool to monetize existing software and algorithms, create new bespoke applications, develop methods of ingesting and processing virtually any type of data, integrate with our APIs, or add new data for training or correlation.
+If you’re looking for a sales channel for your AI software products, to add intelligent features to an existing application, or to leverage robust infrastructure for AI development and custom machine learning model training - Veritone’s aiWARE platform can help.
 
-As a developer, Veritone can provide a distribution channel for your software products without the need for you to create all of the "plumbing" of a full software stack, or the need to directly market and sell to end-clients.
-If you choose, you can simply focus on developing killer algorithms, data sets, or applications on top of aiWARE.
-Through Veritone, developers gain access to significant clients across industries on an international scale through our significant marketing and sales efforts.
+## Developers Role in aiWARE
+Veritone aiWARE provides a production-ready platform for developers to deploy proprietary software including trained machine learning models, applications, data schemas, and data ingestion adapters for your own use privately or to monetize your tech by making it public for Veritone customer usage.
 
-Other developers may be more interested in building solutions for themselves or their organization by leveraging the Engines, App Packages, APIs, and Data Sets resident in aiWARE.
+Within aiWARE’s developer environment, Veritone Developer, you can choose the best mix of cognitive engines, APIs, application modules, and third-party integrations to create public or private AI solutions you want to create to meet your use case.
+
+Looking to generate revenue? Partner with us to deploy your technology publicly and gain exposure to our industry-leading customers. When they use your technology, you get paid.
+
+To get started, create a Veritone Developer account. 
 
 ## Roadmap 
 Like aiWARE itself, Veritone Developer continues to evolve rapidly.
