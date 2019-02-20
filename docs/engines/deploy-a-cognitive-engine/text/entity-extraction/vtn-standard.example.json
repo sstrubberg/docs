@@ -1,0 +1,64 @@
+{
+  "object": [
+    {
+      "type": "text",
+      "text": "John was a true gentleman, very clean, quiet, pleasant and courteous.",
+      "sentence": 1,
+
+      // NOTE: Sentiment COULD have been output as its own object as well.
+      // But then I'd have no idea what "type" to call it...
+      // And since it shares a common sentence/startChar/stopChar, it's fine to combine them here.
+      // And technically the sentiment key is only allowed at the doc or series level per the current example.
+      // But I think it makes sense to add to the object level too.
+      "sentiment": {
+        "positiveValue": 0.9765505194664001
+      },
+
+      // startChar/stopChar not a part of the current text spec proposal.  But would probably be useful
+      // Would be relative to the whole file, not char-within-sentence or something
+      "startChar": 0,
+      "stopChar": 69
+    },
+    {
+      "type": "concept", // Not really sure about this one...  Need a sub-type of "person" somehow?
+      "label": "John",
+      "sentence": 1,
+
+      // See above about startChar/stopChar as a new non-standard idea
+      "startChar": 0,
+      "stopChar": 3
+    },
+    {
+      "type": "keyword",
+      "label": "true gentleman"
+    },
+    {
+      "type": "keyword",
+      "label": "courteous"
+    },
+    {
+      "type": "keyword",
+      "label": "pleasant"
+    },
+    {
+      "type": "keyword",
+      "label": "pleasure"
+    },
+    {
+      "type": "keyword",
+      "label": "quiet"
+    },
+    {
+      "type": "keyword",
+      "label": "host"
+    },
+    {
+      "type": "keyword",
+      "label": "clean"
+    },
+    {
+      "type": "keyword",
+      "label": "john"
+    }
+  ]
+}
