@@ -37,7 +37,11 @@
     - [Data Correlation](engines/deploy-a-cognitive-engine/data/correlation/)
     - [Speech Transcription](engines/deploy-a-cognitive-engine/speech/transcription/)
     - [Speaker Separation](engines/deploy-a-cognitive-engine/speech/speaker-separation/)
-    - [Text Translation](engines/deploy-a-cognitive-engine/text/translation/)
+    - Text
+      - [Entity Extraction](engines/deploy-a-cognitive-engine/text/entity-extraction/)
+      - [Keyword Extraction](engines/deploy-a-cognitive-engine/text/keyword-extraction/)
+      - [Sentiment Analysis](engines/deploy-a-cognitive-engine/text/sentiment/)
+      - [Translation](engines/deploy-a-cognitive-engine/text/translation/)
   - [Deployment Models](engines/deployment-model/)
   - [Processing Modes](engines/processing-modes/)
     - [Segment Engine Processing](engines/processing-modes/segment-processing/)
