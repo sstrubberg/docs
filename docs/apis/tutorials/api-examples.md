@@ -17,7 +17,7 @@ mutation userLogin {
 
 
 RESPONSE:
-```graphql
+```json
 {
   "data": {
     "userLogin": {
@@ -29,7 +29,7 @@ RESPONSE:
 
 
 ERRORS: (User not found)
-```graphql
+```json
 {
   "data": {
     "userLogin": null
@@ -72,9 +72,19 @@ mutation validateToken {
 mutation userLogout {
   userLogout(token: "3c15e237-94a5-4563-9be7-4882acc7fa74")
 }
-Ingestion:
-Create TDO and Upload Asset
-# Note: "uri" must be a public URL.
+```
+
+
+## Ingestion
+
+### Create TDO and Upload Asset
+
+This is probably the easiest way to upload a file.
+Given a public file URL it will create a container TDO and upload the file as the primary media asset for that TDO.
+
+> "uri" must be a public URL
+
+```graphql
 mutation createTDOWithAsset {
   createTDOWithAsset(
     input: {
@@ -121,8 +131,10 @@ mutation createTDO {
 ```
 
 ## Jobs and Tasks
+
 ### Run Engine Job on Existing TDO
-Note: The last three "engineId" values are needed for the TDO to appear correctly in CMS.
+
+> The last three "engineId" values are needed for the TDO to appear correctly in CMS.
 
 ```graphql
 mutation runEngineJob {
@@ -151,22 +163,22 @@ mutation runEngineJob {
 }
 ```
 
-### Run Real-Time (RT) Engine Job on External File (using Web Stream Adapter) and Add Results to Existing TDO
+### Run Engine Job on External File (using Web Stream Adapter) and Add Results to Existing TDO
 
-Note: "url" must be public; change only the second "engineId" value.  The existing TDO must be empty (no assets).
+> "url" must be public; change only the second "engineId" value.  The existing TDO must be empty (no assets).
 
 ```graphql
 mutation runRTEngineJob {
   createJob(input: {
     targetId: "88900861",
     tasks: [{
-      engineId: "9e611ad7-2d3b-48f6-a51b-0a1ba40feab4",
+      engineId: "9e611ad7-2d3b-48f6-a51b-0a1ba40feab4",  # Webstream Adapter's Engine ID
       payload: {
         url: "https://s3.amazonaws.com/hold4fisher/s3Test.mp4"
       }
     },
     {
-      engineId: "38afb67a-045b-43db-96db-9080073695ab"
+      engineId: "38afb67a-045b-43db-96db-9080073695ab"  # Some engine ID you want to use for processing
     }]
   }) {
     id
@@ -175,6 +187,7 @@ mutation runRTEngineJob {
 ```
 
 ### Run Engine Job with Standby Task
+
 ```graphql
 mutation createTranscriptionJobWithStandby {
     createJob(input: {
@@ -236,7 +249,8 @@ mutation downloadFileAndRunEngine {
 ```
 
 ### Run Library-Enabled Engine Job (e.g. Face Recognition)
-Note: "libraryEngineModelId" can be obtained by running the "Get Library Training Stats" query in the "Library" section.
+
+> "libraryEngineModelId" can be obtained by running the [Get Library Training Stats](#get-library-training-stats) query in the "Library" section
 
 ```graphql
 mutation runLibraryEngineJob {
@@ -268,7 +282,9 @@ mutation runLibraryEngineJob {
 ```
 
 ### Create (Kick Off) a Job
+
 This job will reprocess face detection in Redact.
+
 ```graphql
 mutation reprocessFaceDetection {
    createJob(input : {
@@ -315,6 +331,7 @@ query getJobs {
 ```
 
 ### Get List of Running Jobs
+
 ```graphql
 query runningJobs {
   jobs(status: running, limit: 1000) {
@@ -335,6 +352,7 @@ query runningJobs {
 ```
 
 ### Check Job Status of a Specific Job
+
 ```graphql
 query jobStatus {
   job(id: "18114402_busvuCo21J") {
@@ -361,7 +379,8 @@ query jobStatus {
 ```
 
 RESPONSE:
-```graphql
+
+```json
 {
   "data": {
     "job": {
@@ -404,7 +423,9 @@ RESPONSE:
 ```
 
 ### Get Information on Most Recent Jobs
+
 The following query will retrieve information on the most recent 10 jobs.
+
 ```graphql
 query {
  jobs(orderBy: {field: createdDateTime, direction: desc}, limit: 10) {
@@ -446,7 +467,8 @@ query {
 ```
 
 RESPONSE:
-```graphql
+
+```json
 {
   "data": {
     "jobs": {
@@ -654,6 +676,7 @@ RESPONSE:
 ```
 
 ### Get Information about a Task
+
 ```graphql
 query {
   task(id:"19020926_wUALxLYqjoDh5N8") {
@@ -669,8 +692,10 @@ query {
   }
 }
 ```
+
 RESPONSE:
-```graphql
+
+```json
 {
   "data": {
     "task": {
@@ -689,6 +714,7 @@ RESPONSE:
 ```
 
 ### Get Logs for Tasks
+
 ```graphql
 query getLogs {
   temporalDataObject(id: "331178425") {
@@ -713,6 +739,7 @@ query getLogs {
 ```
 
 ### Cancel Job in Progress
+
 ```graphql
 mutation cancelJob {
     cancelJob(id: "18114402_busvuCo21J") {
@@ -735,6 +762,7 @@ mutation deleteTDO {
 ## Retrieval
 
 ### Get Assets for TDO
+
 ```graphql
 query getAssets {
   temporalDataObject(id: "280670774") {
@@ -757,6 +785,7 @@ query getAssets {
 ```
 
 ### Get Engine Results in Veritone Standard Format
+
 ```graphql
 query getEngineOutput {
   engineResults(tdoId: "102014611", engineIds: ["transcribe-speechmatics-container-en-us"]) {
@@ -774,6 +803,7 @@ query getEngineOutput {
 ```
 
 ### Get Transcription and Speaker Separation Results in Veritone Standard Format
+
 ```graphql
 query vtn {
   engineResults(tdoId: "107947027", engineIds: ["40356dac-ace5-46c7-aa02-35ef089ca9a4", "transcribe-speechmatics-container-en-us"]) {
@@ -784,7 +814,10 @@ query vtn {
 }
 ```
 
-### Get Engine Output by Job ID
+### Get Task Output by Job ID
+
+Task output displays the debug/log information reported by the engine at the completion of the task
+
 ```graphql
 query getEngineOutputByJob {
   job(id: "18083316_nNXUOSnxJH") {
@@ -806,7 +839,10 @@ query getEngineOutputByJob {
 }
 ```
 
-### Get Engine Output by TDO ID
+### Get Task Output (Log Information) by TDO ID
+
+Task output displays the debug/log information reported by the engine at the completion of the task
+
 ```graphql
 query getEngineOutputByTDO {
   temporalDataObject(id: "102014611") {
@@ -828,20 +864,8 @@ query getEngineOutputByTDO {
 }
 ```
 
-### Get Transcription Output in JSON Format
-```graphql
-query getTranscriptJSON {
-  temporalDataObject(id: "102014611") {
-    primaryAsset(assetType: "transcript") {
-      signedUri
-      transform(transformFunction: Transcript2JSON)
-    }
-    details
-  }
-}
-```
-
 ### Export Transcription Results
+
 ```graphql
 mutation createExportRequest {
  createExportRequest(input: {
@@ -896,7 +920,7 @@ mutation createExportRequest {
 }
 ```
 
-## How to check the status
+### Check the status of an export request
 ```graphql
 query checkExportStatus {
  exportRequest(id:"10f6f809-ee36-4c12-97f4-d1d0cf04ea85") {
@@ -907,9 +931,32 @@ query checkExportStatus {
 }
 ```
 
+### Get Transcription Output in JSON Format (Legacy Method)
+
+!> This output format is deprecated in favor of using the [engineResults query](#Get-Engine-Results-in-Veritone-Standard-Format) for `vtn-standard` output
+and the [`createExportRequest` mutation](#export-transcription-results) for transforming to other formats.
+
+```graphql
+query getTranscriptJSON {
+  temporalDataObject(id: "102014611") {
+    primaryAsset(assetType: "transcript") {
+      signedUri
+      transform(transformFunction: Transcript2JSON)
+    }
+    details
+  }
+}
+```
+
 ## Search
 
-### Search by SDO
+See the [search quickstart guide](/apis/search-quickstart.md) for details on the searchMedia query syntax.
+
+### Search Structured Data
+
+This example shows how to search for structured data using the search API.
+In this case, we're looking for media where the `QUANTITY` value equals `2` or the `ORG_ID` value equals `"12343"`.
+
 ```graphql
 query searchSDO {
     searchMedia(search: {
@@ -934,8 +981,10 @@ query searchSDO {
 ## Folders
 
 ### Create a Folder
+
 Before you can create a folder, you must know the ID of the intended parent folder. 
 If you want to place the new folder under the `rootFolder`, you can discover the `rootFolder` ID by (for example) running a query using `organizations(id:<your org ID>)`.
+
 ```graphql
 mutation {
   createFolder(input:{
@@ -949,7 +998,9 @@ mutation {
   }
 }
 ```
+
 RESPONSE:
+
 ```json
 {
   "data": {
@@ -960,12 +1011,15 @@ RESPONSE:
   }
 }
 ```
+
 ERRORS:
+
 Note that all four input fields (`name`, `description`, `parentId`, and `rootFolderType`) are mandatory.
 The `rootFolderType` should correspond to the folder type of the `parentId` folder and should be one of `cms`, `collection`, or `watchlist`.
 
 
 ### List Folders in CMS and Contained TDOs
+
 ```graphql
 query listFolders {
   rootFolders(type: cms) {
@@ -992,6 +1046,7 @@ query listFolders {
 ```
 
 ### Get Folder Info by TDO ID
+
 ```graphql
 query getFolderInfoByTDO {
   temporalDataObject(id: "112971783") {
@@ -1009,6 +1064,7 @@ query getFolderInfoByTDO {
 ```
 
 ### Get Folder Info by Folder ID
+
 ```graphql
 query getFolderInfo {
   folder(id: "0ef7e0e3-63f5-47b9-8ed1-4c172c5a1e0a") {
@@ -1026,6 +1082,7 @@ query getFolderInfo {
 ## Library
 
 ### Get Entity Info
+
 ```graphql
 query getEntityInfo {
   entity(id: "02de18d5-4f70-450c-9716-de949668ec40") {
@@ -1033,7 +1090,11 @@ query getEntityInfo {
     jsondata
   }
 }
-Get Unpublished Entities in Library
+```
+
+### Get Unpublished Entities in Library
+
+```graphql
 query unpublishedEntities {
   entities(libraryIds: "ffd171b9-d493-41fa-86f1-4e02dd769e73", isPublished: false, limit: 1000) {
     count
@@ -1046,6 +1107,7 @@ query unpublishedEntities {
 ```
 
 ### Publish/Train Library
+
 ```graphql
 mutation publishLibrary {
   publishLibrary(id: "169f5db0-1464-48b2-b5e1-59fe5c9db7d9") {
@@ -1055,6 +1117,7 @@ mutation publishLibrary {
 ```
 
 ### Get Library Training Stats
+
 Get trainJobId value for desired engine model (e.g. "Machine Box Facebox Similarity")
 
 ```graphql
@@ -1079,6 +1142,7 @@ query getTrainJobID {
 ```
 
 ### Use trainJobId value to obtain train job details
+
 ```graphql
 query getTrainJobDetails {
   job(id: "18104324_t5XpqlGOfm") {
@@ -1095,6 +1159,7 @@ query getTrainJobDetails {
 ```
 
 ### Check if Engine is Library-Trainable
+
 ```graphql
 query engineLibraryTrainable {
   engine(id: "95d62ae8-edc2-4fb9-ad08-fe33646f0ece") {
@@ -1179,12 +1244,13 @@ mutation  {
     id
   } 
 }
-
-
 ```
+
 ## Misc. Setup
+
 ### Whitelist Engine
-```graphql 
+
+```graphql
 mutation whitelistEngine {
   addToEngineWhitelist(toAdd:{
     organizationId: 16994
@@ -1249,7 +1315,9 @@ mutation blacklistDeprecatedFaceboxEngines {
 ```
 
 ## Miscellaneous
+
 ### Get TDO Details (Filename, Tags, etc.)
+
 ```graphql
 query getTDODetails {
   temporalDataObject(id: "102014611") {   
@@ -1259,6 +1327,7 @@ query getTDODetails {
 ```
 
 ### Get Duration of Media File (In Seconds)
+
 ```graphql
 query getDuration {
   temporalDataObject(id: "112971783") {
@@ -1273,6 +1342,7 @@ query getDuration {
 ```
 
 ### Get Organization Info for Current Session
+
 ```graphql
 query getOrgInfo {
   me {
@@ -1285,6 +1355,10 @@ query getOrgInfo {
 ```
 
 ### List Available Engines
+
+?> For demonstration purposes this query uses `limit: 1000`.
+In actual practice you will want to use a lower limit and ensure that you are paginating through the list of engines by using the `offset` parameter until you receive an empty list.
+
 ```graphql
 query listEngines {
   engines(limit: 1000) {
@@ -1316,6 +1390,10 @@ query listEngines {
 ```
 
 ### List Available Engines (Grouped By Category)
+
+?> For demonstration purposes this query uses `limit: 1000`.
+In actual practice you will want to use a lower limit and ensure that you are paginating through the list of engines by using the `offset` parameter until you receive an empty list.
+
 ```graphql
 query listEnginesByCategory {
   engineCategories {
@@ -1340,6 +1418,7 @@ query listEnginesByCategory {
 ```
 
 ### List Available Engine Categories
+
 ```graphql
 query listEngineCategories {
   engineCategories {
@@ -1353,6 +1432,10 @@ query listEngineCategories {
 ```
 
 ### List Engines for a Specific Category
+
+?> For demonstration purposes this query uses `limit: 1000`.
+In actual practice you will want to use a lower limit and ensure that you are paginating through the list of engines by using the `offset` parameter until you receive an empty list.
+
 ```graphql
 query listCategoryEngines {
   engines(category: "transcription", limit: 1000) {
@@ -1380,6 +1463,7 @@ query listCategoryEngines {
 ```
 
 ### List Engine’s Custom Fields
+
 ```graphql
 query engineCustomFields {
   engine(id: "b396fa74-83ff-4052-88a7-c37808a25673") {
@@ -1399,7 +1483,9 @@ query engineCustomFields {
 ```
 
 ### Fix Video Playback Issue in CMS
+
 List all TDOs and identify which ones have a bad primary asset based on `signedUri` field.
+
 ```graphql
 query listPrimaryAsset {
   temporalDataObjects(limit: 100) {
@@ -1413,7 +1499,8 @@ query listPrimaryAsset {
 }
 ```
 
-Identify the right Asset ID to use as the TDO's primary asset:
+### Identify the right Asset ID to use as the TDO's primary asset:
+
 ```graphql
 query primaryAsset {
   temporalDataObject(id: "117679345") {
@@ -1468,7 +1555,7 @@ mutation createTDOWithAsset {
 ```
 
 RESPONSE:
-```graphql
+```json
 {
   "data": {
     "createTDOWithAsset": {
@@ -1504,7 +1591,7 @@ mutation createJob {
 ```
 
 RESPONSE:
-```graphql
+```json
 {
   "data": {
     "createJob": {
@@ -1527,7 +1614,7 @@ query getEngineResults {
 ```
 
 You can also provide the `jobId` instead of the `engineId`:
-```graphql    
+```graphql
 query getEngineResults {
   engineResults(tdoId: "390257661", jobId:"19031004_ADKtN72ZWZ") {
     records {
